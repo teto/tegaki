@@ -13,9 +13,6 @@ def getversion():
     f.close()
     return regexp.search(buf).group(1)
 
-# Please run
-# python setup.py install  
-
 setup(
     name = 'tegaki-python',
     description = 'Tegaki Python library',

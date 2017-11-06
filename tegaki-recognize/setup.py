@@ -30,12 +30,12 @@ def save_file(filename, txt):
 class install(installbase):
     def run(self):
         installbase.run(self)
-        self._write_file("tegaki-recognize.in", 
+        self._write_file("tegaki-recognize.in",
                          os.path.join("share", "menu"),
-                         0644)
-        self._write_file("tegaki-recognize.desktop.in", 
+                         oct(644))
+        self._write_file("tegaki-recognize.desktop.in",
                          os.path.join("share", "applications"),
-                         0644)
+                         oct(644))
 
     def _write_file(self, filename, folder, mode):
         txt = load_file(filename)
@@ -46,12 +46,12 @@ class install(installbase):
         out = os.path.join(outdir, filename.replace(".in", ""))
         if not os.path.exists(outdir):
             os.makedirs(outdir)
-        print "Writing", out
+        print("Writing", out)
         save_file(out, txt)
         os.chmod(out, mode)
 
     def _replace_prefix(self, txt):
-        return txt.replace("@PREFIX", self._getprefix())       
+        return txt.replace("@PREFIX", self._getprefix())
 
     def _getprefix(self):
         try:
@@ -65,7 +65,7 @@ class install(installbase):
             return self.prefix
 
 # Please run
-# python setup.py install   
+# python setup.py install
 
 mainscript = 'bin/tegaki-recognize'
 
@@ -84,14 +84,14 @@ if sys.platform == 'darwin' and "py2app" in sys.argv[1:]:
     )
 elif sys.platform == 'win32' and "py2exe" in sys.argv[1:]:
     import py2exe
-    
+
     extra_options = dict(
     setup_requires=['py2exe'],
     windows=[{'script' : mainscript,
                   'icon_resources': [(0x0004, 'data/icons/tegaki-recognize.ico')]},],
     options=dict(py2exe=dict(
                                    compressed=1,
-                                   optimize=2, 
+                                   optimize=2,
                                    bundle_files=3,
                                    includes="gtk,atk,pangocairo,cairo,tegaki,tegaki.trainer,tegaki.recognizer,tegakigtk,zinnia,tegaki.arrayutils,tegaki.engines,wagomu")),
     )
@@ -113,5 +113,9 @@ setup(
     url = 'http://www.tegaki.org',
     version = getversion(),
     license='GPL',
+    install_requires=[
+        'tegaki-python',
+        'gtk'
+        ],
     **extra_options
 )

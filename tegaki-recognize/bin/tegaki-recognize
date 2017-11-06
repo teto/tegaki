@@ -173,7 +173,7 @@ def recognize(recognizer, model, fileobj):
     recognizers = Recognizer.get_available_recognizers()
 
     if not recognizer in recognizers:
-        raise TegakiRecognizeError, "Not an available recognizer."
+        raise TegakiRecognizeError("Not an available recognizer.")
 
     recognizer_klass = recognizers[recognizer]
     recognizer = recognizer_klass()
@@ -181,11 +181,11 @@ def recognize(recognizer, model, fileobj):
     models = recognizer_klass.get_available_models()
 
     if not model in models:
-        raise TegakiRecognizeError, "Not an available model."
+        raise TegakiRecognizeError("Not an available model.")
 
     recognizer.set_model(model)
 
-    print "\n".join(["%s %f" % (c,s) for c,s in recognizer.recognize(writing)])
+    print("\n".join(["%s %f" % (c,s) for c,s in recognizer.recognize(writing)]))
 
 
 usage = """usage: %prog [options] recognizer model [xmlfile]
@@ -225,7 +225,7 @@ try:
 
         TegakiRecognize(options).run()
 
-except TegakiRecognizeError,e:
+except TegakiRecognizeError as e:
     sys.stderr.write(str(e) + "\n\n")
 
     sys.stderr.write("Available recognizers and models:" + "\n")
