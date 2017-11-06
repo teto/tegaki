@@ -22,7 +22,7 @@ echo "Copying all Pango modules ..."
 cp -R /opt/local/lib/pango/1.6.0/modules/*.so ${Resources}/lib/pango/1.6.0/modules/
 
 echo "Copying GTK modules"
-cp -r /opt/local/lib/gtk-2.0 $Resources/lib
+cp -r /opt/local/lib/Gtk-2.0 $Resources/lib
 
 # generate new pango.modules file
 mkdir -p ${Resources}/etc/pango/
@@ -44,19 +44,19 @@ cp /opt/local/etc/fonts/conf.avail/* ${Resources}/etc/fonts/conf.d/
 #perl -pi -e 's/.*verdana.*//i' $Resources/fonts.conf
 
 # generate a new GDK pixbufs loaders file
-mkdir -p $Resources/etc/gtk-2.0/
-#GDK_PIXBUF_MODULEDIR=/Users/mathieublondel/Desktop/projects/hwr/tegaki-recognize/dist/tegaki-recognize.app/Contents/Resources/lib/gtk-2.0/2.10.0/loaders/ /opt/local/bin/gdk-pixbuf-query-loaders > $Resources/etc/gtk-2.0/gdk-pixbuf.loaders
-sed "s?/opt/local/lib/gtk-2.0/2.10.0/loaders/?../Resources/lib/gtk-2.0/2.10.0/loaders/?" < /opt/local/etc/gtk-2.0/gdk-pixbuf.loaders > $Resources/etc/gtk-2.0/gdk-pixbuf.loaders
+mkdir -p $Resources/etc/Gtk-2.0/
+#GDK_PIXBUF_MODULEDIR=/Users/mathieublondel/Desktop/projects/hwr/tegaki-recognize/dist/tegaki-recognize.app/Contents/Resources/lib/Gtk-2.0/2.10.0/loaders/ /opt/local/bin/gdk-pixbuf-query-loaders > $Resources/etc/Gtk-2.0/gdk-pixbuf.loaders
+sed "s?/opt/local/lib/Gtk-2.0/2.10.0/loaders/?../Resources/lib/Gtk-2.0/2.10.0/loaders/?" < /opt/local/etc/Gtk-2.0/gdk-pixbuf.loaders > $Resources/etc/Gtk-2.0/gdk-pixbuf.loaders
 
 # Some libraries (pixbufloader-gif, pixbufloader-xpm, svg_loader) have too large dependencies. 
 ln -s ../Frameworks ${MacOS}/f
 
-# Copy gtk python modules. This will override the py2app way (creating a _gtk.pyc wrapper in the site-packages.zip, which tries to load _gtk.so from lib-dynload, but it crashes)
-cp -r /opt/local/lib/python2.5/site-packages/gtk-2.0/* $Resources/lib/python2.5
+# Copy Gtk python modules. This will override the py2app way (creating a _Gtk.pyc wrapper in the site-packages.zip, which tries to load _Gtk.so from lib-dynload, but it crashes)
+cp -r /opt/local/lib/python2.5/site-packages/Gtk-2.0/* $Resources/lib/python2.5
 
 echo "Fixing library names ..."
 # fix the libraries we include
-for dylib in $Frameworks/*.dylib ${Resources}/lib/pango/1.6.0/modules/*.so $Resources/lib/gtk-2.0/2.10.0/*/*.so $Resources/lib/python2.5/*.so $Resources/lib/python2.5/*/*.so 
+for dylib in $Frameworks/*.dylib ${Resources}/lib/pango/1.6.0/modules/*.so $Resources/lib/Gtk-2.0/2.10.0/*/*.so $Resources/lib/python2.5/*.so $Resources/lib/python2.5/*/*.so 
 do
     # skip symlinks
     if test ! -L $dylib ; then
@@ -87,7 +87,7 @@ do
     fi
 done
 
-# Copy french gtk2.0 locale
+# Copy french Gtk2.0 locale
 #cp -r /opt/local/share/locale/fr/LC_MESSAGES/*.mo ${Resources}/locale/fr/LC_MESSAGES
 
 # Copy Tegaki engines
@@ -108,7 +108,7 @@ res = os.path.join(currdir, "..", "Resources")
 os.environ["FONTCONFIG_FILE"] = os.path.join(res, "etc/fonts/fonts.conf") 
 os.environ["TEGAKI_ENGINE_PATH"] = os.path.join(res, "engines/") 
 os.environ["PANGO_RC_FILE"] = os.path.join(res, "etc/pango/pangorc")
-os.environ["GDK_PIXBUF_MODULE_FILE"] = os.path.join(res, "etc/gtk-2.0/gdk-pixbuf.loaders") 
+os.environ["GDK_PIXBUF_MODULE_FILE"] = os.path.join(res, "etc/Gtk-2.0/gdk-pixbuf.loaders") 
 os.environ["GTK_PATH"] = res 
 os.environ["GTK_EXE_PREFIX"]= res 
 

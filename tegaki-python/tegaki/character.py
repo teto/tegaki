@@ -1104,7 +1104,7 @@ class _IOBase(object):
         gzip-compressed or bzip2-compressed XML.
         """
         if [path, self._path] == [None, None]:
-            raise ValueError, "A path must be specified"
+            raise ValueError("A path must be specified")
         elif path is None:
             path = self._path
 
@@ -1425,7 +1425,7 @@ class Character(_XmlBase):
         if self._first_tag:
             self._first_tag = False
             if self._tag != "character":
-                raise ValueError, "The very first tag should be <character>"
+                raise ValueError("The very first tag should be <character>")
 
         if self._tag == "stroke":
             self._stroke = Stroke()

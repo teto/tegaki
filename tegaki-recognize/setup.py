@@ -80,7 +80,7 @@ if sys.platform == 'darwin' and "py2app" in sys.argv[1:]:
     options=dict(py2app=dict(argv_emulation=True,
                              site_packages=True,
                              iconfile="data/icons/tegaki-recognize.icns",
-                             includes="gtk,atk,pangocairo,cairo,gio,tegaki,tegaki.trainer,tegaki.recognizer,tegakigtk,zinnia,wagomu,tegaki.arrayutils")),
+                             includes="Gtk,atk,pangocairo,cairo,gio,tegaki,tegaki.trainer,tegaki.recognizer,tegakiGtk,zinnia,wagomu,tegaki.arrayutils")),
     )
 elif sys.platform == 'win32' and "py2exe" in sys.argv[1:]:
     import py2exe
@@ -93,7 +93,7 @@ elif sys.platform == 'win32' and "py2exe" in sys.argv[1:]:
                                    compressed=1,
                                    optimize=2,
                                    bundle_files=3,
-                                   includes="gtk,atk,pangocairo,cairo,tegaki,tegaki.trainer,tegaki.recognizer,tegakigtk,zinnia,tegaki.arrayutils,tegaki.engines,wagomu")),
+                                   includes="Gtk,atk,pangocairo,cairo,tegaki,tegaki.trainer,tegaki.recognizer,tegakiGtk,zinnia,tegaki.arrayutils,tegaki.engines,wagomu")),
     )
 else:
     extra_options = dict(
@@ -115,7 +115,20 @@ setup(
     license='GPL',
     install_requires=[
         'tegaki-python',
-        'gtk'
+        'Gtk'
+# Gtk,
+#     atk,
+#     pangocairo,
+    'pygobject',
+# 'gobject',
+        'cairo',
+        # 'gio',
+        # 'tegaki.trainer',
+        # 'tegaki.recognizer',
+        # 'tegakiGtk',
+        # 'zinnia',
+        # 'wagomu',
+        # 'tegaki.arrayutils'
         ],
     **extra_options
 )

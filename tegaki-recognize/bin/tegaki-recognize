@@ -22,6 +22,7 @@
 
 import base64
 from optparse import OptionParser
+# import argparse
 
 from tegaki.character import Character
 from tegaki.recognizer import Recognizer
@@ -86,7 +87,7 @@ class TegakiRecognize(object):
         self._pixbuf = loader.get_pixbuf()
 
     def _init_status_icon(self):
-        self._status_icon = gtk.StatusIcon()
+        self._status_icon = Gtk.StatusIcon()
         self._status_icon.set_from_pixbuf(self._pixbuf)
 
         self._status_icon.connect("activate", self._on_activate)
@@ -95,9 +96,9 @@ class TegakiRecognize(object):
         self._status_icon.set_visible(True)
 
     def _create_window(self):
-        self._window = gtk.Window()
+        self._window = Gtk.Window()
         self._window.set_icon(self._pixbuf)
-        self._window.set_position(gtk.WIN_POS_CENTER)
+        self._window.set_position(Gtk.WIN_POS_CENTER)
         self._window.set_title("Tegaki")
         self._window.set_accept_focus(False)
 
@@ -113,11 +114,11 @@ class TegakiRecognize(object):
         # add quit button if the option "don't quit" is passed
         if self._dont_quit:
             vbox = rw.get_toolbar_vbox()
-            button = gtk.Button()
-            image = gtk.image_new_from_stock(gtk.STOCK_QUIT, 
-                                             gtk.ICON_SIZE_BUTTON)
+            button = Gtk.Button()
+            image = Gtk.image_new_from_stock(Gtk.STOCK_QUIT, 
+                                             Gtk.ICON_SIZE_BUTTON)
             button.set_image(image)
-            button.connect("clicked", lambda x: gtk.main_quit())
+            button.connect("clicked", lambda x: Gtk.main_quit())
             vbox.pack_start(button, expand=False)
 
         if not self._hide:
@@ -138,7 +139,7 @@ class TegakiRecognize(object):
             self._window.hide()
             return True # don't propagate the event
         else:
-            gtk.main_quit()
+            Gtk.main_quit()
 
     def _on_activate(self, widget):
         if self._window.get_property("visible"):
@@ -149,9 +150,9 @@ class TegakiRecognize(object):
             self._load_window_position()
 
     def _on_popup(self, widget, button, time):
-        menu = gtk.Menu()
-        quit = gtk.ImageMenuItem(gtk.STOCK_QUIT)
-        quit.connect("activate", lambda x: gtk.main_quit())
+        menu = Gtk.Menu()
+        quit = Gtk.ImageMenuItem(Gtk.STOCK_QUIT)
+        quit.connect("activate", lambda x: Gtk.main_quit())
         menu.append(quit)
         menu.show_all()
         menu.popup(None, None, None, button, time)
@@ -159,11 +160,11 @@ class TegakiRecognize(object):
     def _on_commit(self, widget, string):
         if not send_unicode(unicode(string, "utf8")):
             # save to clipboard if send_unicode isn't supported
-            clipboard = gtk.Clipboard()
+            clipboard = Gtk.Clipboard()
             clipboard.set_text(string)
 
     def run(self):
-        gtk.main()
+        Gtk.main()
 
 def recognize(recognizer, model, fileobj):
     char = Character()
@@ -217,11 +218,11 @@ try:
         recognize(args[0], args[1], fileobj)
     else:
         # GUI
-        import gtk
-        from gtk import gdk
+        from gi.repository import Gtk
+        from Gtk import gdk
 
-        from tegakigtk.recognizer import SmartRecognizerWidget,SimpleRecognizerWidget
-        from tegakigtk.fakekey import send_unicode
+        from tegakiGtk.recognizer import SmartRecognizerWidget,SimpleRecognizerWidget
+        from tegakiGtk.fakekey import send_unicode
 
         TegakiRecognize(options).run()
 

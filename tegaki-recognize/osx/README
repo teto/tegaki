@@ -11,6 +11,6 @@ default configure.ldflags   {"-L${prefix}/lib -Xlinker -headerpad_max_install_na
 
 This leaves more space in the library headers for py2app.
 
-3. Install py25-gtk. Make sure that tegaki-recognize works.
+3. Install py25-Gtk. Make sure that tegaki-recognize works.
 
 4. Run osx/create_app_bundle.sh then osx/create_dmg.sh

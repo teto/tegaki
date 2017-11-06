@@ -520,8 +520,8 @@ CREATE INDEX character_setid_index ON characters(setid);
                 if silent:
                     continue
                 else:
-                    raise ValueError, "The number of strokes doesn't " \
-                                      "match with reference character"
+                    raise ValueError( "The number of strokes doesn't " \
+                                      "match with reference character")
 
             for stroke, label in zip(strokes, stroke_labels):
                 utf8 = label.encode("utf-8")
@@ -878,7 +878,7 @@ WHERE setid=? ORDER BY charid DESC LIMIT 1""", (setid,))[0]
         character must have been previously retrieved from the collection.
         """
         if not hasattr(character, "charid"):
-            raise ValueError, "The character object needs a charid attribute"
+            raise ValueError("The character object needs a charid attribute")
         self._e("""UPDATE characters
 SET utf8=?, n_strokes=?, data=?, sha1=?
 WHERE charid=?""", (character.get_utf8(),
@@ -1048,12 +1048,13 @@ FROM characters GROUP BY setid""")
         if self._first_tag:
             self._first_tag = False
             if self._tag != "character-collection":
-                raise ValueError, \
+                raise ValueError(
                       "The very first tag should be <character-collection>"
+                      )
 
         if self._tag == "set":
             if not attrs.has_key("name"):
-                raise ValueError, "<set> should have a name attribute"
+                raise ValueError( "<set> should have a name attribute")
 
             self._curr_set_name = attrs["name"].encode("UTF-8")
             self.add_set(self._curr_set_name)
